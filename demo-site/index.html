@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ERGO VRF Oracle Demo</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>ERGO VRF Oracle Demo</h1>
+        <p>Register operators, run a round, and inspect outcomes.</p>
+      </header>
+
+      <section class="card">
+        <h2>Register Operator</h2>
+        <form id="operator-form">
+          <label>Operator ID <input name="id" required placeholder="operator-alpha" /></label>
+          <label>Reward Address <input name="rewardAddress" required placeholder="9f..." /></label>
+          <label>Stake Amount <input name="stakeAmount" type="number" value="500" min="1" /></label>
+          <button type="submit">Register</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Round Controls</h2>
+        <form id="round-form">
+          <label>Round ID <input name="roundId" required placeholder="round-1" /></label>
+          <label>Reward Pool <input name="rewardPool" type="number" value="100" min="1" /></label>
+          <label>Domain Tag <input name="entropyDomainTag" value="ergo-vrf-oracle-demo" /></label>
+          <label>Max Submissions <input name="maxSubmissions" type="number" value="8" min="1" /></label>
+          <button type="submit">Start Round</button>
+        </form>
+        <form id="submit-form">
+          <label>Operator ID <input name="operatorId" required placeholder="operator-alpha" /></label>
+          <label>Entropy Hex <input name="entropyHex" required placeholder="64-char hex" /></label>
+          <button type="submit">Submit Entropy</button>
+        </form>
+        <button id="finalize-btn" type="button">Finalize Round</button>
+      </section>
+
+      <section class="card">
+        <h2>Explorer View</h2>
+        <pre id="explorer-output">Loading...</pre>
+      </section>
+
+      <section class="card">
+        <h2>Event Log</h2>
+        <pre id="event-log"></pre>
+      </section>
+    </main>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
