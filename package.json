@@ -10,8 +10,9 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "npm run build && node dist/scripts/demo-server.js",
+    "start": "npm run build && node dist/scripts/service.js",
     "demo:dev": "npm run build && node dist/scripts/demo-server.js",
+    "operator:start": "npm run build && node dist/scripts/operator-client.js",
     "simulate": "npm run build && node dist/scripts/simulate-round.js",
     "test": "vitest run",
     "test:watch": "vitest"

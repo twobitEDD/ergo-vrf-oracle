@@ -43,6 +43,15 @@ export class OracleDemoService {
     return this.coordinator.registerOperator(profile);
   }
 
+  ensureOperator(profile: OperatorProfile): { operator: OperatorProfile; created: boolean } {
+    const existing = this.listOperators().find((operator) => operator.id === profile.id);
+    if (existing) {
+      return { operator: existing, created: false };
+    }
+    const created = this.coordinator.registerOperator(profile);
+    return { operator: created, created: true };
+  }
+
   listOperators(): OperatorProfile[] {
     return this.coordinator.listOperators();
   }
@@ -115,6 +124,17 @@ export class OracleDemoService {
         .map((round) => this.toExplorerView(round))
         .sort((a, b) => b.startedAtEpochMs - a.startedAtEpochMs)
     };
+  }
+
+  getActiveRound() {
+    if (!this.activeRoundId) {
+      return null;
+    }
+    const active = this.rounds.get(this.activeRoundId);
+    if (!active) {
+      return null;
+    }
+    return this.toExplorerView(active);
   }
 
   private requireActiveRound(): DemoRoundState {

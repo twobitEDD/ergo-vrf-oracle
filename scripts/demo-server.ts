@@ -61,6 +61,36 @@ const server = createServer(async (request, response) => {
       return;
     }
 
+    if (method === "GET" && url.pathname === "/api/rounds/active") {
+      sendJson(response, 200, { activeRound: demoService.getActiveRound() });
+      return;
+    }
+
+    if (method === "POST" && url.pathname === "/api/operators/ensure") {
+      const body = await parseJsonBody<{
+        id: string;
+        rewardAddress: string;
+        stakeAmount: string | number;
+        reputationScore?: number;
+        isWhitelisted?: boolean;
+      }>(request);
+      const ensured = demoService.ensureOperator({
+        id: body.id,
+        rewardAddress: body.rewardAddress,
+        stakeAmount: BigInt(body.stakeAmount),
+        reputationScore: body.reputationScore,
+        isWhitelisted: body.isWhitelisted
+      });
+      sendJson(response, ensured.created ? 201 : 200, {
+        created: ensured.created,
+        operator: {
+          ...ensured.operator,
+          stakeAmount: ensured.operator.stakeAmount.toString()
+        }
+      });
+      return;
+    }
+
     if (method === "POST" && url.pathname === "/api/operators") {
       const body = await parseJsonBody<{
         id: string;
