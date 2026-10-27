@@ -163,8 +163,10 @@ export class NodeLedger implements Ledger {
     return { status: res.status, text: await res.text() };
   }
 
+  /** Last 10 headers, newest first. The node returns them oldest first. */
   private async headers() {
-    return this.get("/blocks/lastHeaders/10") as Promise<Array<{ height: number }>>;
+    const headers = (await this.get("/blocks/lastHeaders/10")) as Array<{ height: number }>;
+    return headers.sort((a, b) => b.height - a.height);
   }
 
   async height(): Promise<number> {
