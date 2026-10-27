@@ -2,6 +2,18 @@
 
 This project explores a practical path to deliver verifiable randomness for ERGO applications using many node operators who submit entropy and earn rewards.
 
+## Multi-root beacon VRF (on-chain, v0)
+
+ErgoScript contracts where anyone can run a bonded randomness beacon, any request picks its own root
+beacon, other beacons contribute and share the fee, and the root keeps the whole fee when nobody else
+contributes. Commitments use the 40-byte Lithos entry layout. Compiled and tested on the Fleet mock
+chain; not deployed yet.
+
+- Design: [docs/multi-root-beacon-vrf.md](docs/multi-root-beacon-vrf.md)
+- Contracts: `contracts/VrfBeacon.es`, `contracts/VrfFactory.es`, `contracts/VrfRequest.es`
+- TypeScript: `src/beacon/` (`compileBeaconSuite`, `HashChain`, `mixRandom`, `splitFee`)
+- Tests: `npm test` (`test/beaconContracts.test.ts` runs every flow on the mock chain)
+
 ## Project Structure
 
 ```text
