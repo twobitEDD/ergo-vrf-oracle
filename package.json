@@ -15,11 +15,14 @@
     "operator:start": "npm run build && node dist/scripts/operator-client.js",
     "simulate": "npm run build && node dist/scripts/simulate-round.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "pilot": "npm run build && node dist/scripts/pilot/run.js"
   },
   "devDependencies": {
     "@fleet-sdk/mock-chain": "^0.12.0",
+    "@fleet-sdk/wallet": "^0.12.0",
     "@types/node": "^22.15.21",
+    "ergo-lib-wasm-nodejs": "^0.28.0",
     "typescript": "^5.8.3",
     "vitest": "^2.1.8"
   },

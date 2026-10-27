@@ -158,12 +158,13 @@ describe("VrfFactory", () => {
     );
   }
 
-  test("opens a request for current epoch + TARGET_DELAY", () => {
+  test("opens a request for a target 1..TARGET_DELAY epochs ahead", () => {
     expect(run(chain, open([root, lithos], TARGET), [requester])).toBe(true);
+    expect(run(chain, open([root], TARGET - 1n), [requester])).toBe(true);
   });
 
-  test("refuses any other target epoch", () => {
-    expect(run(chain, open([root], TARGET - 1n), [requester])).toBe(false);
+  test("refuses the current epoch or a target too far ahead", () => {
+    expect(run(chain, open([root], TARGET - 2n), [requester])).toBe(false);
     expect(run(chain, open([root], TARGET + 1n), [requester])).toBe(false);
   });
 

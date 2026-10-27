@@ -50,8 +50,8 @@ Actions are passed as context var 0 (`Byte`) on the spent box.
 2. **Rotate** (action 1) — new anchor labelled no earlier than the current epoch. Requests that recorded
    the old chain will not verify against it, which counts as not revealing.
 3. **Withdraw** (action 2) — after `UNBOND_EPOCHS` without a reveal.
-4. **Open request** (`VrfFactory`, no signature) — target = current epoch + `TARGET_DELAY`, set from the
-   real `HEIGHT`. Each listed beacon is a data input, so each recorded entry is that beacon's real
+4. **Open request** (`VrfFactory`, no signature) — target is 1..`TARGET_DELAY` epochs after the current one,
+   checked against the real `HEIGHT` (a window, so a request mined one epoch late still opens). Each listed beacon is a data input, so each recorded entry is that beacon's real
    current one. The request takes one ticket; only factory-opened requests carry one.
 5. **Join** (`VrfRequest` action 0, joining author signs) — before the target epoch starts; appends the
    beacon id and its current entry.

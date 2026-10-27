@@ -11,11 +11,12 @@
   //                R4 Coll[Coll[Byte]] beacon ids, index 0 = root, the rest = named contributors
   //                R5 Coll[Coll[Byte]] each beacon's current 40-byte entry, same order
   //                R6 Coll[Byte]       requester proposition bytes (result + refund go here)
-  //                R7 Long             target epoch = current epoch + TARGET_DELAY
+  //                R7 Long             target epoch, 1..TARGET_DELAY epochs after the current one
   //   dataInputs(i) — the beacon box for R4(i), so every recorded entry is the real current one.
   //
-  // The target is fixed from HEIGHT here, so a request can never be opened for an epoch whose
-  // values are already public.
+  // The target is checked against HEIGHT here, so a request can never be opened for an epoch whose
+  // values are already public. It is a window, not one value, so a request built near the end of an
+  // epoch still opens when it is mined in the next one.
 
   val tok = SELF.tokens(0)
   val out = OUTPUTS(0)
@@ -39,7 +40,8 @@
     req.tokens(0)._1 == tok._1 &&
     req.tokens(0)._2 == 1L &&
     req.R6[Coll[Byte]].isDefined &&
-    target == curEpoch + $TARGET_DELAY
+    target > curEpoch &&
+    target <= curEpoch + $TARGET_DELAY
 
   val listed =
     ids.size >= 1 &&
