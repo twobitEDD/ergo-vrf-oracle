@@ -2,3 +2,6 @@ node_modules/
 dist/
 coverage/
 *.log
+pilot/.secrets.json
+pilot/state*.json
+pilot/runs/
